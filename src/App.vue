@@ -1,26 +1,61 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+ <score-board :score="score"> </score-board>
+  <game-board>  </game-board>
+  <rules-button> </rules-button>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GameBoard from './components/GameBoard.vue'
+import ScoreBoard from './components/ScoreBoard.vue'
+import RulesButton from './components/RulesButton'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    GameBoard, ScoreBoard, RulesButton
+  },
+  data() {
+    return {
+      score: 0,
+      }
+    },
+
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
 }
+body,
+body * {
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  word-break: break-all;
+}
+
+*:focus {
+  outline: none;
+}
+body {
+  background-image: radial-gradient(hsl(214, 47%, 23%),hsl(237, 49%, 15%));
+  width: 100vw;
+  height: 100vh;
+}
+.pick-background {
+  cursor: pointer;
+  background-color: white;
+  height: 150px;
+  width: 150px;
+  position: absolute;
+  object-fit: contain;
+  padding: 25px;
+  border-radius: 50%;
+}
+
+
 </style>
