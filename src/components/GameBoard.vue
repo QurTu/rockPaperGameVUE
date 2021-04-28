@@ -22,9 +22,9 @@
   </div>
   <div v-if="gameState == 3" class="game-state-three">
     <div class="game-outcome">
-      <h1> YOU WIN</h1>
-      <h1> DRAWN GAME</h1>
-      <h1> YOU LOSE</h1>
+      <h1 v-if="result == 1"> YOU WIN</h1>
+      <h1 v-if="result == 0"> DRAWN GAME</h1>
+      <h1 v-if="result == -1"> YOU LOSE</h1>
     </div>
     <div class="game-state-three-grid">
       <div class="your-pick">
@@ -35,7 +35,7 @@
         <img v-if="stageOnePick == 'scissors'" src="../assets/img/icon-scissors.svg" alt=""
              class="stage-one-scissors pick-background">
       </div>
-      <div @click="pcPick()" class="pc-pick">
+      <div  class="pc-pick">
         <img v-if="pcPicks == 'paper'" src="../assets/img/icon-paper.svg" alt=""
              class="stage-one-paper pick-background">
         <img v-if="pcPicks == 'rock'" src="../assets/img/icon-rock.svg" alt=""
@@ -44,6 +44,9 @@
              class="stage-one-scissors pick-background">
       </div>
     </div>
+    <div class="play-again">
+      <button @click="playAgain()" type="button"> PLAY AGAIN!</button>
+    </div>
   </div>
 
 </template>
@@ -51,6 +54,7 @@
 <script>
 export default {
   name: 'ScoreBoard',
+  emits: ["game-outcome"],
   data() {
     return {
       stageOnePick: ' ',
@@ -75,22 +79,25 @@ export default {
     gameOutCome() {
       switch(this.pcPicks) {
         case 'paper':
-          if( this.stageOnePick == 'rock') this.result = -1
-          if( this.stageOnePick == 'paper') this.result = 0
-          if( this.stageOnePick == 'scissors') this.result = 1
+          if( this.stageOnePick == 'rock') this.result = -1;
+          if( this.stageOnePick == 'paper') this.result = 0;
+          if( this.stageOnePick == 'scissors') this.result = 1;
                 break;
         case 'rock':
-          if( this.stageOnePick == 'rock') this.result = 0
-          if( this.stageOnePick == 'paper') this.result = 1
-          if( this.stageOnePick == 'scissors') this.result = -1
+          if( this.stageOnePick == 'rock') this.result = 0;
+          if( this.stageOnePick == 'paper') this.result = 1;
+          if( this.stageOnePick == 'scissors') this.result = -1;
           break;
         case 'scissors':
-          if( this.stageOnePick == 'rock') this.result = 1
-          if( this.stageOnePick == 'paper') this.result = -1
-          if( this.stageOnePick == 'scissors') this.result = 0
+          if( this.stageOnePick == 'rock') this.result = 1;
+          if( this.stageOnePick == 'paper') this.result = -1;
+          if( this.stageOnePick == 'scissors') this.result = 0;
           break;
-
       }
+    },
+    playAgain() {
+      this.gameState = 1;
+     this.$emit('game-outcome', this.result );
     }
   },
 }
@@ -134,7 +141,6 @@ export default {
   display: flex;
   width: 800px;
   margin: 100px calc(50vw - 400px);
-
 }
 .game-state-three {
   position: absolute;
@@ -147,9 +153,23 @@ export default {
   justify-content: center;
 
 }
-
 .game-state-two img , .game-state-three img {
   margin: 0 50px;
   position: static;
+}
+.game-state-three .game-outcome h1 {
+  text-align: center;
+  margin-bottom: 50px;
+  color: #ffffff;
+}
+.play-again {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.play-again button {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-weight: bold;
 }
 </style>

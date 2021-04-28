@@ -1,7 +1,10 @@
 <template>
- <score-board :score="score"> </score-board>
-  <game-board>  </game-board>
+ <score-board :score="this.score"> </score-board>
+  <button  class="koja"  @click="scoreUpdate()" >score</button>
+
+  <game-board @game-outcome="gameOutCome">  </game-board>
   <rules-button> </rules-button>
+
 
 </template>
 
@@ -20,7 +23,16 @@ export default {
       score: 0,
       }
     },
+  methods: {
+    gameOutCome(gameResult) {
+      this.score += gameResult;
+      console.log(this.score)
 
+    },
+    scoreUpdate() {
+      this.score++
+    }
+  }
 }
 </script>
 
@@ -55,6 +67,13 @@ body {
   object-fit: contain;
   padding: 25px;
   border-radius: 50%;
+}
+.koja {
+  position: absolute;
+  z-index: 100;
+  width: 50px;
+  height: 50px;
+  background: white;
 }
 
 
