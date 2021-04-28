@@ -1,24 +1,29 @@
 <template>
 
-  <div class="button"></div>
-  <RulesPopUp :close="closeModel" ></RulesPopUp>
+  <button class="rules-button" > RULES</button>
+
 </template>
 
 <script>
-import RulesPopUp from "@/components/RulesPopUp";
+
 export default {
   name: "RulesButton",
   components: {
-   RulesPopUp
+
   },
   methods: {
-    closeModel() {
-      console.log('works')
-    }
+
   }
 }
 </script>
 
 <style scoped>
-
+.rules-button {
+  cursor: pointer;
+  bottom: 50px;
+  padding: 10px 20px;
+  position: absolute;
+  left: 50px;
+  bottom: 50px;
+}
 </style>

@@ -1,7 +1,5 @@
 <template>
- <score-board :score="this.score"> </score-board>
-  <button  class="koja"  @click="scoreUpdate()" >score</button>
-
+ <score-board :score="score"> </score-board>
   <game-board @game-outcome="gameOutCome">  </game-board>
   <rules-button> </rules-button>
 
@@ -55,8 +53,6 @@ body * {
 }
 body {
   background-image: radial-gradient(hsl(214, 47%, 23%),hsl(237, 49%, 15%));
-  width: 100vw;
-  height: 100vh;
 }
 .pick-background {
   cursor: pointer;

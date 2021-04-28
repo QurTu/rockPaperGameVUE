@@ -8,7 +8,6 @@
       <h1>SCORE</h1>
       <p>{{score}}</p>
     </div>
-
   </div>
 </template>
 
@@ -16,9 +15,6 @@
 
 export default {
   name: 'ScoreBoard',
-  data: function () {
-    return {}
-  },
   props: ['score']
 }
 </script>
