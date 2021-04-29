@@ -1,59 +1,16 @@
 <template>
-  <div v-if="gameState == 1" class="game-state-one">
-    <img class="game-state-one-triangle" src="../assets/img/bg-triangle.svg" alt="">
-    <img @click="playerPick('paper')" src="../assets/img/icon-paper.svg" alt="" class="stage-one-paper pick-background">
-    <img @click="playerPick('rock')" src="../assets/img/icon-rock.svg" alt="" class="stage-one-rock pick-background">
-    <img @click="playerPick('scissors')" src="../assets/img/icon-scissors.svg" alt=""
-         class="stage-one-scissors pick-background">
-  </div>
-  <div v-if="gameState == 2" class="game-state-two">
-    <div class="your-pick">
-      <img v-if="stageOnePick == 'paper'" src="../assets/img/icon-paper.svg" alt=""
-           class="stage-one-paper pick-background">
-      <img v-if="stageOnePick == 'rock'" src="../assets/img/icon-rock.svg" alt=""
-           class="stage-one-rock pick-background">
-      <img v-if="stageOnePick == 'scissors'" src="../assets/img/icon-scissors.svg" alt=""
-           class="stage-one-scissors pick-background">
-    </div>
-    <div @click="pcPick()" class="pc-pick">
-      <img src="../assets/img/klaustukas.png" alt="" class="what-pc-picks pick-background">
-    </div>
-
-  </div>
-  <div v-if="gameState == 3" class="game-state-three">
-    <div class="game-outcome">
-      <h1 v-if="result == 1"> YOU WIN</h1>
-      <h1 v-if="result == 0"> DRAWN GAME</h1>
-      <h1 v-if="result == -1"> YOU LOSE</h1>
-    </div>
-    <div class="game-state-three-grid">
-      <div class="your-pick">
-        <img v-if="stageOnePick == 'paper'" src="../assets/img/icon-paper.svg" alt=""
-             class="stage-one-paper pick-background">
-        <img v-if="stageOnePick == 'rock'" src="../assets/img/icon-rock.svg" alt=""
-             class="stage-one-rock pick-background">
-        <img v-if="stageOnePick == 'scissors'" src="../assets/img/icon-scissors.svg" alt=""
-             class="stage-one-scissors pick-background">
-      </div>
-      <div  class="pc-pick">
-        <img v-if="pcPicks == 'paper'" src="../assets/img/icon-paper.svg" alt=""
-             class="stage-one-paper pick-background">
-        <img v-if="pcPicks == 'rock'" src="../assets/img/icon-rock.svg" alt=""
-             class="stage-one-rock pick-background">
-        <img v-if="pcPicks == 'scissors'" src="../assets/img/icon-scissors.svg" alt=""
-             class="stage-one-scissors pick-background">
-      </div>
-    </div>
-    <div class="play-again">
-      <button @click="playAgain()" type="button"> PLAY AGAIN!</button>
-    </div>
-  </div>
-
+  <GameStateOne v-if="gameState == 1"  @player-pick="playerPick">   </GameStateOne>
+  <GameStateTwo :playerPick="stageOnePick" v-if="gameState == 2"  @pc-pick="botPick">  </GameStateTwo>
+  <GameStateThree v-if="gameState == 3" @play-again="playAgain" :result="result" :stageOnePick="stageOnePick" :pcPicks="pcPicks">    </GameStateThree>
 </template>
 
 <script>
+import  GameStateOne from "./GameStateOne";
+import GameStateTwo from "@/components/GameStateTwo";
+import GameStateThree from "@/components/GameStateThree";
 export default {
   name: 'ScoreBoard',
+  components: {GameStateOne, GameStateTwo, GameStateThree},
   emits: ["game-outcome"],
   data() {
     return {
@@ -64,11 +21,12 @@ export default {
     }
   },
   methods: {
+
     playerPick(pick) {
       this.stageOnePick = pick;
       this.gameState = 2;
     },
-    pcPick() {
+    botPick() {
       let number = Math.floor(Math.random() * 3);
       if (number == 0) this.pcPicks = 'paper'
       if (number == 1) this.pcPicks = 'rock'
@@ -94,17 +52,18 @@ export default {
           if( this.stageOnePick == 'scissors') this.result = 0;
           break;
       }
+      this.$emit('game-outcome', this.result );
     },
     playAgain() {
       this.gameState = 1;
-     this.$emit('game-outcome', this.result );
+
     }
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .game-state-one {
   position: relative;
   display: inline-block;
@@ -132,6 +91,16 @@ export default {
   top: -75px;
   left: -75px;
   border: 10px solid blue;
+}
+.pick-background {
+  cursor: pointer;
+  background-color: white;
+  height: 150px;
+  width: 150px;
+  position: absolute;
+  object-fit: contain;
+  padding: 25px;
+  border-radius: 50%;
 }
 
 .game-state-two {
@@ -171,5 +140,47 @@ export default {
   cursor: pointer;
   padding: 10px 20px;
   font-weight: bold;
+}
+@media (max-width: 550px) {
+  .game-state-one {
+    margin: 50px calc(50vw - 75px);
+    width: 150px;
+  }
+  .game-state-one .game-state-one-triangle {
+    width: 150px;
+  }
+  .stage-one-paper {
+    top: -32.5px;
+    right: -32.5px;
+    border: 5px solid red;
+  }
+
+  .stage-one-rock {
+    bottom: -32.5px;
+    left: calc(50% + -32.5px);
+    border: 5px solid green;
+  }
+
+  .stage-one-scissors {
+    top: -32.5px;
+    left: -32.5px;
+    border: 5px solid blue;
+  }
+  .pick-background {
+    cursor: pointer;
+    background-color: white;
+    height: 75px;
+    width: 75px;
+    position: absolute;
+    object-fit: contain;
+    padding: 15px;
+    border-radius: 50%;
+  }
+  .game-state-two {
+    margin-top: 50px;
+  }
+  .game-state-three {
+  margin-top: 50px;
+}
 }
 </style>

@@ -24,8 +24,6 @@ export default {
   methods: {
     gameOutCome(gameResult) {
       this.score += gameResult;
-      console.log(this.score)
-
     },
     scoreUpdate() {
       this.score++
@@ -54,23 +52,5 @@ body * {
 body {
   background-image: radial-gradient(hsl(214, 47%, 23%),hsl(237, 49%, 15%));
 }
-.pick-background {
-  cursor: pointer;
-  background-color: white;
-  height: 150px;
-  width: 150px;
-  position: absolute;
-  object-fit: contain;
-  padding: 25px;
-  border-radius: 50%;
-}
-.koja {
-  position: absolute;
-  z-index: 100;
-  width: 50px;
-  height: 50px;
-  background: white;
-}
-
 
 </style>
