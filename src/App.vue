@@ -2,6 +2,7 @@
  <score-board :score="score"> </score-board>
   <game-board @game-outcome="gameOutCome">  </game-board>
   <rules-button> </rules-button>
+  <WeatherShow> </WeatherShow>
 
 
 </template>
@@ -10,11 +11,12 @@
 import GameBoard from './components/GameBoard.vue'
 import ScoreBoard from './components/ScoreBoard.vue'
 import RulesButton from './components/RulesButton'
+import WeatherShow from "@/components/WeatherShow";
 
 export default {
   name: 'App',
   components: {
-    GameBoard, ScoreBoard, RulesButton
+    GameBoard, ScoreBoard, RulesButton, WeatherShow
   },
   data() {
     return {

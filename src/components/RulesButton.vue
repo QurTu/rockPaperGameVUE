@@ -73,7 +73,8 @@ export default {
 }
 @media (max-width: 550px) {
   .rules-button {
-    bottom: 0px;
+    bottom: 20px;
+    left: 20px;
   }
   .rules {
     width: 100%;
